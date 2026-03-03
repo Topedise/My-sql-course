@@ -59,21 +59,22 @@ From invoice i
 ORDER BY BirthDate
 
 
-SELECT 
-i.InvoiceId
-, i.InvoiceDate
+SELECT
+    i.InvoiceId
+,i.InvoiceDate
 ,i.Total
 ,c.LastName
 ,c.FirstName
 ,c.FirstName +' '+ c.LastName AS Fullname 
 ,c.SupportRepId
-,e.FirstName +' '+e.LastName AS [Employee full name]
- FROM Invoice i
- LEFT JOIN  Customer C ON I.CustomerId = c.CustomerId
- LEFT JOIN Employee e ON c.SupportRepId = C.CustomerId
+,CASE WHEN e.FirstName IS NULL THEN 'No Employee Name' ELSE e.FirstName +' '+e.LastName END AS [Employee full name]
+FROM
+    Invoice i
+    LEFT JOIN Customer C ON I.CustomerId = c.CustomerId
+    LEFT JOIN Employee e ON c.SupportRepId = C.CustomerId
 --WHERE i.total > 45.00
 
- ORDER BY I.InvoiceDate DESC
+ORDER BY I.InvoiceDate DESC
 
 -- When was the oldest employee born?  Who is that?
 
